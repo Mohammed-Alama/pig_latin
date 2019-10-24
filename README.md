@@ -4,4 +4,4 @@ Pig Latin is a game of alterations played on the English language game. To creat
 
 idea come from  Martyr2's Mega Project Ideas List!
 
-using https://www.wikihow.com/Speak-Pig-Latin as refrence for ruls
+using https://www.wikihow.com/Speak-Pig-Latin as refrence for rules

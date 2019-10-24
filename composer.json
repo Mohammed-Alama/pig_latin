@@ -1,0 +1,12 @@
+{
+    "name": "mohammedalama/pig_latin",
+    "description": "Pig Latin is class for a game of alterations played on the English language game.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohammed-Alama",
+            "email": "mohammedalsayed9688@gmail.com"
+        }
+    ],
+    "require": {}
+}

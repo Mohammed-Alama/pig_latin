@@ -11,17 +11,16 @@ class Pig_Latin
     public function __construct($word)
     {
         $this->word = $word;
-        $this->check($this->word);
+        $this->print($this->word);
     }
 
     /**
      * @param $word
      * @return array
      */
-    protected function getArrLatinWord($word)
+    protected function getArrayFromLatinWord(string $word)
     {
-        $latin_word = str_split($word);
-        return $latin_word;
+        return str_split($word);
     }
 
     /**
@@ -32,8 +31,7 @@ class Pig_Latin
      */
     protected function getArrFirstLetterOfLatinWord(array $latin_word)
     {
-        $first_element = array_slice($latin_word, 0, 1);
-        return $first_element;
+        return array_slice($latin_word, 0, 1);
     }
 
     /**
@@ -44,7 +42,7 @@ class Pig_Latin
      */
     protected function isFirstInVowels($word)
     {
-        $latin_word = $this->getArrLatinWord($word);
+        $latin_word = $this->getArrayFromLatinWord($word);
         $first_element = $this->getArrFirstLetterOfLatinWord($latin_word);
         return in_array($first_element[0], $this->vowels);
     }
@@ -57,18 +55,16 @@ class Pig_Latin
      */
     protected function isFirstIsConsonantOrCluster($word)
     {
-        $latin_word = $this->getArrLatinWord($word);
-        if (count($this->getArrLatinWord($word)) > 2) {
+        $latin_word = $this->getArrayFromLatinWord($word);
+        if (count($this->getArrayFromLatinWord($word)) > 2) {
 
             if (!in_array($latin_word[0], $this->vowels) && !in_array($latin_word[1], $this->vowels) && in_array($latin_word[2], $this->vowels)) {
                 return 'Cluster';
-
             } elseif (!in_array($latin_word[0], $this->vowels) && in_array($latin_word[1], $this->vowels)) {
                 return 'Consonant';
             }
         }
         return false;
-
     }
 
     /**
@@ -79,8 +75,11 @@ class Pig_Latin
      */
     protected function isFirstY($word)
     {
-        $latin_word = $this->getArrLatinWord($word);
-        $first_element = array_slice($latin_word, 0, 1);
+        $first_element = $this->getArrFirstLetterOfLatinWord(
+            $this->getArrayFromLatinWord(
+                $word
+            )
+        );
         if (strtolower($first_element[0]) == 'y') {
             return true;
         }
@@ -95,9 +94,9 @@ class Pig_Latin
      */
     protected function isContainsY($word)
     {
-        $latin_word = $this->getArrLatinWord($word);
+        $latin_word = $this->getArrayFromLatinWord($word);
 
-        if (count($this->getArrLatinWord($word)) == 2 && $latin_word[1] == 'y') {
+        if (count($this->getArrayFromLatinWord($word)) == 2 && $latin_word[1] == 'y') {
             $suffix = $latin_word[0] . 'ay';
             array_shift($latin_word);
             $latin_word = implode('', $latin_word);
@@ -125,7 +124,7 @@ class Pig_Latin
         if ($this->isFirstInVowels($word)) {
             return print_r($word . '-' . $suffix);
         }
-        $latin_word = $this->getArrLatinWord($word);
+        $latin_word = $this->getArrayFromLatinWord($word);
         array_shift($latin_word);
         $latin_word = implode('', $latin_word);
         return print_r($latin_word . '-' . $suffix);
@@ -154,15 +153,13 @@ class Pig_Latin
     {
         if ($this->isFirstIsConsonantOrCluster($word) == 'Cluster') {
 
-            return $this->PrintLatinContainsClusterOrY($this->getArrLatinWord($word));
-
+            return $this->PrintLatinContainsClusterOrY($this->getArrayFromLatinWord($word));
         } elseif ($this->isFirstIsConsonantOrCluster($word) == 'Consonant') {
-            $latin_word = $this->getArrLatinWord($word);
-            $suffix = $latin_word [0] . 'ay';
+            $latin_word = $this->getArrayFromLatinWord($word);
+            $suffix = $latin_word[0] . 'ay';
             array_shift($latin_word);
             $latin_word = implode('', $latin_word);
             return print_r($latin_word . '-' . $suffix);
-
         }
         return false;
     }
@@ -174,34 +171,23 @@ class Pig_Latin
      * @param $word
      * @return string
      */
-    public function check($word)
+    public function print($word)
     {
         if ($this->isFirstInVowels($word)) {
-
             return $this->PrintLatin($word, $this->yay);
-
         } elseif ($this->isFirstIsConsonantOrCluster($word) == 'Cluster' || $this->isFirstIsConsonantOrCluster($word) == 'Consonant') {
-
             return $this->PrintLatinContainsConsonantOrCluster($word);
-
         } elseif ($this->isFirstY($word)) {
-
-            return $this->PrintLatin($word, $this->getArrLatinWord($word)[0] . $this->ay);
-
+            return $this->PrintLatin($word, $this->getArrayFromLatinWord($word)[0] . $this->ay);
         } elseif ($this->isContainsY($word)) {
-            if (count($this->getArrLatinWord($word)) == 2 && $this->getArrLatinWord($word)[1] == 'y') {
+            if (count($this->getArrayFromLatinWord($word)) == 2 && $this->getArrayFromLatinWord($word)[1] == 'y') {
                 return true;
             }
-
-            return $this->PrintLatinContainsClusterOrY($this->getArrLatinWord($word));
-
+            return $this->PrintLatinContainsClusterOrY($this->getArrayFromLatinWord($word));
         }
 
         return print_r('This is Not a Word');
-
     }
-
-
 }
 
 
